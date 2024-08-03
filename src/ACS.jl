@@ -1,9 +1,3 @@
-using HTTP
-using JSON3
-using DataFrames
-using DataStructures
-using .Helpers
-
 """
     get_acs_data()
 """
@@ -55,12 +49,12 @@ function get_acs_data(; year = nothing, survey = nothing, vars = [], _for = "", 
 
     census_query["key"] = get_census_api_key()
 
-    r = HTTP.get(
+    r = get(
         url,
         query = census_query
     )
 
-    body = JSON3.read(r.body)
+    body = read(r.body)
     header, data = body[1], body[2:end]
 
     df = OrderedDict{Symbol, Vector}()
