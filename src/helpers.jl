@@ -1,3 +1,6 @@
+module Helpers
+export get_census_api_key
+
 """
     census_api_key(key, overwrite = false)
 
@@ -30,4 +33,5 @@ function get_census_api_key(key = nothing)
     else
         return ENV["CENSUS_API_KEY"]
     end
+end
 end
