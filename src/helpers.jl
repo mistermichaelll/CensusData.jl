@@ -19,8 +19,8 @@ end
 
 Check to see if a census API key is installed.
 """
-function get_census_api_key(key = "")
-    if !isempty(key)
+function get_census_api_key(key = nothing)
+    if key !== nothing
         return key
     elseif !haskey(ENV, "CENSUS_API_KEY")
         @warn """
