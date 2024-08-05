@@ -11,6 +11,9 @@ function census_api_key(key; overwrite=false)
     elseif haskey(ENV, "CENSUS_API_KEY") & overwrite == true
         @info "A CENSUS_API_KEY already exists but will be overwritten for this session."
         ENV["CENSUS_API_KEY"] = key
+    elseif !haskey(ENV, "CENSUS_API_KEY")
+        @info "No CENSUS_API_KEY found, writing CENSUS_API_KEY to ENV for current session."
+        ENV["CENSUS_API_KEY"] = key
     end
 end
 
