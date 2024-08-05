@@ -18,12 +18,7 @@ end;
     @test_throws "The regular 1-year ACS for 2020 was not released and is not available in CensusData.jl." get_acs_data(
         year=2020,
         survey="acs1",
-        vars=[
-            "B01001_001E", # total population
-            "B08006_001E", # total commuters
-            "B08006_014E", # bike commuters
-            "B08006_017E", # worked from home
-        ],
+        vars=["B01001_001E", "B08006_001E", "B08006_014E", "B08006_017E"],
         _for="place",
         _in="state:11",
     )
