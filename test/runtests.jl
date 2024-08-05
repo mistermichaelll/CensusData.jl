@@ -7,10 +7,10 @@ using Test
             year = 2021,
             survey = "acs5",
             vars = [
-                "B01001_001E", # total population
-                "B08006_001E", # total commuters
-                "B08006_014E", # bike commuters
-                "B08006_017E", # worked from home
+                "B01001_001E",
+                "B08006_001E",
+                "B08006_014E",
+                "B08006_017E",
             ],
             _for = "place",
             _in = "state:11"
