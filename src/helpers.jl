@@ -5,7 +5,7 @@ Sets the Census API Key in a user's Julia environment. Note that this does not p
 
 To persist between sessions, I recommend adding the API key to your `startup.jl` file.
 """
-function census_api_key(key; overwrite = false)
+function census_api_key(key; overwrite=false)
     if haskey(ENV, "CENSUS_API_KEY") & overwrite == false
         @info "A CENSUS_API_KEY already exists. You can overwrite it with the argument `overwrite=true`."
     elseif haskey(ENV, "CENSUS_API_KEY") & overwrite == true
@@ -19,7 +19,7 @@ end
 
 Check to see if a census API key is installed.
 """
-function get_census_api_key(key = nothing)
+function get_census_api_key(key=nothing)
     if key !== nothing
         return key
     elseif !haskey(ENV, "CENSUS_API_KEY")

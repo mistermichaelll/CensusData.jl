@@ -1,16 +1,8 @@
 """
     get_acs_data()
 """
-function get_acs_data(; year = nothing, survey = nothing, vars = [], _for = "", _in = "")
-    url = join(
-        [
-            "https://api.census.gov/data",
-            "$year",
-            "acs",
-            "$survey"
-        ],
-        "/"
-    )
+function get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
+    url = join(["https://api.census.gov/data", "$year", "acs", "$survey"], "/")
 
     ## handle the 2020 1-Year ACS
     if year == 2020 && survey == "acs1"
@@ -18,7 +10,7 @@ function get_acs_data(; year = nothing, survey = nothing, vars = [], _for = "", 
             "The regular 1-year ACS for 2020 was not released and is not available in CensusData.jl.",
             "Due to low response rates, the Census Bureau instead released a set of experimental estimates for the 2020 1-year ACS.",
             "These estimates can be downloaded at https://www.census.gov/programs-surveys/acs/data/experimental-data/1-year.html.",
-            "1-year ACS data can still be accessed for other years by supplying an appropriate year to the `year` parameter."
+            "1-year ACS data can still be accessed for other years by supplying an appropriate year to the `year` parameter.",
         ]
 
         # Combine messages into a single formatted string
@@ -49,15 +41,12 @@ function get_acs_data(; year = nothing, survey = nothing, vars = [], _for = "", 
 
     census_query["key"] = get_census_api_key()
 
-    r = get(
-        url,
-        query = census_query
-    )
+    r = get(url; query=census_query)
 
     body = read(r.body)
     header, data = body[1], body[2:end]
 
-    df = OrderedDict{Symbol, Vector}()
+    df = OrderedDict{Symbol,Vector}()
     for (i, col_name) in enumerate(header)
         df[Symbol(col_name)] = [row[i] for row in data]
     end
