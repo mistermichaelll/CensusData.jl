@@ -2,6 +2,7 @@ module CensusData
 using HTTP: get
 using JSON3: read
 using DataFrames: DataFrame
+using Missings: passmissing
 using DataStructures: OrderedDict
 
 include("helpers.jl")
