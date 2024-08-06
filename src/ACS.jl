@@ -3,7 +3,7 @@
 """
 function get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
     url = join(["https://api.census.gov/data", "$year", "acs", "$survey"], "/")
-    variable_def_url = variable_definition_url = "https://api.census.gov/data/%year/acs/$survey/variables.json"
+    variable_def_url = "https://api.census.gov/data/$year/acs/$survey/variables.json"
 
     ## handle the 2020 1-Year ACS
     if year == 2020 && survey == "acs1"
@@ -41,7 +41,7 @@ function get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
         end
     end
 
-    r = get(url; query=census_query)
+    r = get(variable_def_url)
     var_defs_json = read(r.body)[:variables]
 
     types = OrderedDict{Symbol, Type}()
