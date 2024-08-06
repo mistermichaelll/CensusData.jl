@@ -25,7 +25,3 @@ end;
         _in="state:11",
     )
 end;
-
-# @testset "ensure columns make sense" begin
-#     #TODO: need to make sure columns that are returned have a sensible type.
-# end;

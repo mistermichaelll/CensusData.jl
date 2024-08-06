@@ -30,7 +30,7 @@ function get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
         _for = "public use microdata area"
     end
 
-    census_query = Dict("get" => join(push!(vars, "NAME"), ","))
+    census_query = Dict("get" => join(pushfirst!(vars, "NAME"), ","))
 
     if !isempty(_for)
         census_query["for"] = _for * ":*"
