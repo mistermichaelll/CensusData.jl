@@ -30,28 +30,6 @@ function get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
         _for = "public use microdata area"
     end
 
-    ## get the types for the variables of interest
-    function parse_census_types(type::String)
-        if type == "int"
-            Int64
-        elseif type == "float"
-            Float64
-        else
-            String
-        end
-    end
-
-    r = get(variable_def_url)
-    var_defs_json = read(r.body)[:variables]
-
-    types = OrderedDict{Symbol, Type}()
-    for i in header
-        try
-            types[Symbol(i)] = parse_census_types(vars_defs_json[:variables][Symbol(i)][:predicateType])
-        catch e
-        end
-    end
-
     census_query = Dict("get" => join(push!(vars, "NAME"), ","))
 
     if !isempty(_for)
@@ -72,6 +50,28 @@ function get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
     df = OrderedDict{Symbol,Vector}()
     for (i, col_name) in enumerate(header)
         df[Symbol(col_name)] = [if isnothing(row[i]) missing else row[i] end for row in data]
+    end
+
+    ## get the types for the variables of interest
+    function parse_census_types(type::String)
+        if type == "int"
+            Int64
+        elseif type == "float"
+            Float64
+        else
+            String
+        end
+    end
+
+    r = get(variable_def_url)
+    var_defs_json = read(r.body)[:variables]
+
+    types = OrderedDict{Symbol, Type}()
+    for i in header
+        try
+            types[Symbol(i)] = parse_census_types(vars_defs_json[:variables][Symbol(i)][:predicateType])
+        catch e
+        end
     end
 
     # set the correct types for the variable columns
