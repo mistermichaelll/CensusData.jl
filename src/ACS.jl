@@ -3,6 +3,7 @@
 """
 function get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
     url = join(["https://api.census.gov/data", "$year", "acs", "$survey"], "/")
+    variable_def_url = variable_definition_url = "https://api.census.gov/data/%year/acs/$survey/variables.json"
 
     ## handle the 2020 1-Year ACS
     if year == 2020 && survey == "acs1"
@@ -29,6 +30,28 @@ function get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
         _for = "public use microdata area"
     end
 
+    ## get the types for the variables of interest
+    function parse_census_types(type::String)
+        if type == "int"
+            Int64
+        elseif type == "float"
+            Float64
+        else
+            String
+        end
+    end
+
+    r = get(url; query=census_query)
+    var_defs_json = read(r.body)[:variables]
+
+    types = OrderedDict{Symbol, Type}()
+    for i in header
+        try
+            types[Symbol(i)] = parse_census_types(vars_defs_json[:variables][Symbol(i)][:predicateType])
+        catch e
+        end
+    end
+
     census_query = Dict("get" => join(push!(vars, "NAME"), ","))
 
     if !isempty(_for)
@@ -48,7 +71,12 @@ function get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
 
     df = OrderedDict{Symbol,Vector}()
     for (i, col_name) in enumerate(header)
-        df[Symbol(col_name)] = [row[i] for row in data]
+        df[Symbol(col_name)] = [if isnothing(row[i]) missing else row[i] end for row in data]
+    end
+
+    # set the correct types for the variable columns
+    for i in collect(keys(types))
+        df[!, Symbol(i)] = passmissing(parse).(types[i], df[!, Symbol(i)])
     end
 
     return DataFrame(df)
