@@ -76,7 +76,11 @@ function get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
 
     # set the correct types for the variable columns
     for i in collect(keys(types))
-        df[!, Symbol(i)] = passmissing(parse).(types[i], df[!, Symbol(i)])
+        #=
+        noting that this syntax appears to defy DataFrames convention of df[!, :col_name],
+        but using the regular syntax fails...
+        =#
+        df[Symbol(i)] = passmissing(parse).(types[Symbol(i)], df[Symbol(i)])
     end
 
     return DataFrame(df)
