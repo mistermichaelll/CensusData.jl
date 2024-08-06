@@ -69,7 +69,7 @@ function get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
     types = OrderedDict{Symbol, Type}()
     for i in header
         try
-            types[Symbol(i)] = parse_census_types(vars_defs_json[:variables][Symbol(i)][:predicateType])
+            types[Symbol(i)] = parse_census_types(vars_defs_json[Symbol(i)][:predicateType])
         catch e
         end
     end
