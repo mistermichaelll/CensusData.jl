@@ -11,7 +11,7 @@ using .States
 
 # main package
 include("helpers.jl")
-include("acs.jl")
+include("ACS.jl")
 
 export census_api_key
 export get_acs_data
