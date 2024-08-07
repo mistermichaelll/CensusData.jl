@@ -25,6 +25,8 @@ jobs:
           - ubuntu-latest
         arch:
           - x64
+      env:
+        CENSUS_API_KEY: ${{ secrets.MY_SECRET_KEY }}
     steps:
       - uses: actions/checkout@v2
       - uses: julia-actions/setup-julia@v1
