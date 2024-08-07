@@ -1,9 +1,43 @@
 """
+    get_acs_variable_types()
+
+Helper function which returns an OrderedDict{Symbol, Type} containing the variables of interest and their associated type.
+
+This function is used to ensure that DataFrame columns corresponding to Census variables have the proper type.
+"""
+function get_acs_variable_types(vars::Vector{String}, year, survey)
+    variable_def_url = "https://api.census.gov/data/$year/acs/$survey/variables.json"
+
+    function parse_census_types(type::String)
+        if type == "int"
+            Int64
+        elseif type == "float"
+            Float64
+        else
+            String
+        end
+    end
+
+    r = get(variable_def_url)
+    var_defs_json = read(r.body)[:variables]
+
+    types = OrderedDict{Symbol, Type}()
+    for var in vars
+        try
+            types[Symbol(var)] = parse_census_types(var_defs_json[Symbol(var)][:predicateType])
+        catch e
+        end
+    end
+
+    return types
+end
+
+
+"""
     get_acs_data()
 """
 function get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
     url = join(["https://api.census.gov/data", "$year", "acs", "$survey"], "/")
-    variable_def_url = "https://api.census.gov/data/$year/acs/$survey/variables.json"
 
     ## handle the 2020 1-Year ACS
     if year == 2020 && survey == "acs1"
@@ -52,29 +86,9 @@ function get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
         df[Symbol(col_name)] = [if isnothing(row[i]) missing else row[i] end for row in data]
     end
 
-    ## get the types for the variables of interest
-    function parse_census_types(type::String)
-        if type == "int"
-            Int64
-        elseif type == "float"
-            Float64
-        else
-            String
-        end
-    end
+    # set the correct column types for Census variables
+    types = get_acs_variable_types(vars, year, survey)
 
-    r = get(variable_def_url)
-    var_defs_json = read(r.body)[:variables]
-
-    types = OrderedDict{Symbol, Type}()
-    for i in header
-        try
-            types[Symbol(i)] = parse_census_types(var_defs_json[Symbol(i)][:predicateType])
-        catch e
-        end
-    end
-
-    # set the correct types for the variable columns
     for col_name in collect(keys(types))
         df[col_name] = passmissing(parse).(types[col_name], df[col_name])
     end
