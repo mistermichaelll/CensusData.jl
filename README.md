@@ -3,7 +3,7 @@
 
 `CensusData.jl` is a light wrapper to the United States Census Bureau's API written in Julia.
 
-Currently, `CensusData.jl` offers limited support for calling data from the American Community Survey API with the `get_acs_data` function.
+Currently, `CensusData.jl` offers limited support for calling data from the American Community Survey API with the `get_acs_data()` function.
 
 # Installation
 Install the package from GitHub via `Pkg`.
@@ -114,6 +114,6 @@ Geographic relationship files are provided on the Census developer site as a too
 - us(fields)
 
 # Future
-I'm throwing this `v0.0.1` package out into the wild because I recently used this Census data as a basis for a [blog post of mine](https://michaelkjohnson.info/posts/2024-08-02-census-biking/), and since I didn't see any Census-related Julia packages out there I thought I'd give making my own a shot 😄 Hopefully it's helpful to someone!
+I'm throwing this `v0.0.1` package out into the wild because this package was born out of working with/tinkering with this data for a [blog post of mine](https://michaelkjohnson.info/posts/2024-08-02-census-biking/), and since I didn't see any Census-related Julia packages out there I thought I'd give making my own a shot 😄 Hopefully it's helpful to someone!
 
 If you'd like to contribute - please let me know!
