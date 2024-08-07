@@ -114,7 +114,9 @@ Here are [some examples](https://api.census.gov/data/2019/acs/acs1/examples.html
 - state_congressional_district(fields, state_fips, district)
 - us(fields)
 
-# Future
-I'm throwing this `v0.0.1` package out into the wild because this package was born out of working with/tinkering with this data for a [blog post of mine](https://michaelkjohnson.info/posts/2024-08-02-census-biking/), and since I didn't see any Census-related Julia packages out there I thought I'd give making my own a shot 😄 Hopefully it's helpful to someone!
+# Current State & Future
+I'm throwing this `v0.0.1` package out into the wild because it was born out of working with/tinkering with this data for a [blog post of mine](https://michaelkjohnson.info/posts/2024-08-02-census-biking/), and since I didn't see any Census-related Julia packages out there I thought I'd give making my own a shot. 😄
 
-If you'd like to contribute - please let me know!
+I plan on continuing to expand the package to cover other data provided by the Census API, as well as continuing to add convenience methods for working with the ACS--such as more abstract geography calls, variable lists, etc.
+
+If you'd like to contribute - please let me know or feel free to open a PR!
