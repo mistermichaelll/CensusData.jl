@@ -94,7 +94,7 @@ julia> VA.abbr
 The API calls for geography can get complicated, and not all geographies are supported in all years. I plan on making this easier to deal with in the future, but for now I would refer to the Census API docs for more information.
 
 
-Geographic relationship files are provided on the Census developer site as a tool to help users compare the geographies from the 1990, 2000 and 2010 Censuses. From these files, data users may determine how geographies from one Census relate to those from the prior Census.
+Here are [some examples](https://api.census.gov/data/2019/acs/acs1/examples.html) for the 2019 1-Year ACS, provided by the Census Bureau.
 
 ### ACS5 Geographies
 - state(fields, state_fips)
@@ -108,6 +108,7 @@ Geographic relationship files are provided on the Census developer site as a too
 - state_legislative_district_lower(fields, state_fips, legislative_district)
 - us(fields)
 - state_zipcode(fields, state_fips, zip5)
+
 ### ACS1 Geographies
 - state(fields, state_fips)
 - state_congressional_district(fields, state_fips, district)
