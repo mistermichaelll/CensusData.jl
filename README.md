@@ -114,6 +114,6 @@ Geographic relationship files are provided on the Census developer site as a too
 - us(fields)
 
 # Future
-I'm throwing this `v0.0.1` package out into the wild because I recently used this Census data as a basis for a [blog post of mine](https://michaelkjohnson.info/posts/2024-08-02-census-biking/), and since I didn't see any Census-related Julia packages out there I thought I'd give this one a shot. Hopefully it's helpful to someone!
+I'm throwing this `v0.0.1` package out into the wild because I recently used this Census data as a basis for a [blog post of mine](https://michaelkjohnson.info/posts/2024-08-02-census-biking/), and since I didn't see any Census-related Julia packages out there I thought I'd give making my own a shot 😄 Hopefully it's helpful to someone!
 
 If you'd like to contribute - please let me know!
