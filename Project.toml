@@ -1,7 +1,7 @@
 name = "CensusData"
 uuid = "b405a967-5e0f-48b9-866e-fec9f8ca74ad"
 authors = ["Michael Johnson"]
-version = "0.0.1-DEV"
+version = "0.0.1"
 
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
