@@ -21,10 +21,12 @@ function get_acs_variable_types(vars::Vector{String}, year, survey)
     r = get(variable_def_url)
     var_defs_json = read(r.body)[:variables]
 
-    types = OrderedDict{Symbol, Type}()
+    types = OrderedDict{Symbol,Type}()
     for var in vars
         try
-            types[Symbol(var)] = parse_census_types(var_defs_json[Symbol(var)][:predicateType])
+            types[Symbol(var)] = parse_census_types(
+                var_defs_json[Symbol(var)][:predicateType]
+            )
         catch e
         end
     end
@@ -32,9 +34,23 @@ function get_acs_variable_types(vars::Vector{String}, year, survey)
     return types
 end
 
-
 """
-    get_acs_data()
+    get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
+
+Fetches data from the American Community Survey (ACS) API for a specified year, survey type, and set of variables.
+
+# Arguments
+- `year::Int`: The year of the ACS data to retrieve. Default is `nothing`. If `year` is 2020 and `survey` is "acs1", an error will be raised as the 1-year ACS for 2020 is not available.
+- `survey::String`: The type of ACS survey to retrieve. This should be either "acs1" for the 1-year ACS or "acs5" for the 5-year ACS. Default is `nothing`.
+- `vars::Vector{String}`: A list of variables to include in the query. The variable names should be valid ACS variable codes.
+- `_for::String`: Specifies the geographic unit for which data is requested. There are a variety of valid options (see the Census API guide) such as "place", "cbg" (block group), "zcta" (zip code tabulation area), or "puma" (public use microdata area). Default is an empty string.
+- `_in::String`: Specifies a geographic unit to subset the results by. Should be in the format of a geographic unit type and ID, such as a state code or county code. Default is an empty string.
+
+# Returns
+- `DataFrame`: A DataFrame containing the ACS data for the specified parameters. Column names correspond to the variables requested, and rows correspond to the data retrieved from the API.
+
+# Errors
+- Raises an error with a detailed message if `year` is 2020 and `survey` is "acs1", as the 1-year ACS for 2020 was not released.
 """
 function get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
     url = join(["https://api.census.gov/data", "$year", "acs", "$survey"], "/")
@@ -83,7 +99,13 @@ function get_acs_data(; year=nothing, survey=nothing, vars=[], _for="", _in="")
 
     df = OrderedDict{Symbol,Vector}()
     for (i, col_name) in enumerate(header)
-        df[Symbol(col_name)] = [if isnothing(row[i]) missing else row[i] end for row in data]
+        df[Symbol(col_name)] = [
+            if isnothing(row[i])
+                missing
+            else
+                row[i]
+            end for row in data
+        ]
     end
 
     # set the correct column types for Census variables
