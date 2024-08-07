@@ -105,6 +105,7 @@ Due to low response rates, the Census Bureau instead released a set of experimen
 These estimates can be downloaded at https://www.census.gov/programs-surveys/acs/data/experimental-data/1-year.html.
 
 1-year ACS data can still be accessed for other years by supplying an appropriate year to the `year` parameter.
+```
 
 ## 5-Year ACS by ZCTA for Washington, D.C.
 ```julia-repl
@@ -135,6 +136,7 @@ julia> get_acs_data(
    8 │ ZCTA5 20064         2175          706           13           77  11      20064
    9 │ ZCTA5 20202            0            0            0            0  11      20202
   10 │ ZCTA5 20204            0            0            0            0  11      20204
+
   [...]
 ```
 
@@ -166,6 +168,8 @@ julia> get_acs_data(
     8 │ White County, Indiana               24149        10964           23          458  18      181
     9 │ Jay County, Indiana                 20840         9400           24          490  18      075
    10 │ Shelby County, Indiana              44438        21938           39          623  18      145
+
+   [...]
 ```
 
 """
