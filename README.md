@@ -18,7 +18,7 @@ First, obtain a [Census API](https://api.census.gov/data/key_signup.html) Key.
 
 You should store this key in your Julia Environment if you'd like it to persist in all sessions. You can store this in your `startup.jl` for convenience, or you can alternatively use a package like [DotEnv](https://github.com/tecosaur/DotEnv.jl) and store it in a regular `.env` file.
 
-For single session use, you can get up going by using the `census_api_key()` function from this package, which will store your API key in the Julia environment.
+For single session use, you can get up and running by using the `census_api_key()` function from this package, which will store your API key in the Julia environment.
 
 ```julia
 using CensusData
@@ -27,7 +27,7 @@ census_api_key("your_api_key")
 
 As noted above, `CensusData.jl` currently offers limited support for the American Community Survey API, which can be called using the `get_acs_data()` function.
 
-As an example, this code will return a DataFrame for the 2019, ACS 1-Year Survey containing the total population, the total number of workers, bike commuters, and workers that work from home for places in Connecticut.
+As an example–this code will return a DataFrame for the 2019, ACS 1-Year Survey containing the total population, the total number of workers, bike commuters, and workers that work from home for places in Connecticut.
 
 ```julia
 julia> get_acs_data(
@@ -57,7 +57,7 @@ julia> 8×7 DataFrame
    8 │ Norwalk city, Connecticut            88826        46606           40         1394  09      55990
 ```
 
-The various variables can be found on the Census website.
+The various variables for the American Community Survey can be found on the Census website.
 
 ## Geography
 
@@ -92,7 +92,6 @@ julia> VA.abbr
 ```
 
 The API calls for geography can get complicated, and not all geographies are supported in all years. I plan on making this easier to deal with in the future, but for now I would refer to the Census API docs for more information.
-
 
 Here are [some examples](https://api.census.gov/data/2019/acs/acs1/examples.html) for the 2019 1-Year ACS, provided by the Census Bureau.
 
